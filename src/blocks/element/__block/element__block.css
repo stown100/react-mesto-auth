@@ -1,0 +1,8 @@
+.element__block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 246px;
+    margin: 25px auto 0px;
+    padding-bottom: 31px;
+}

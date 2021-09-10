@@ -1,0 +1,19 @@
+.profile__vector {
+    border: 2px solid #fff;
+    padding: 14px 64px;
+    max-width: 22px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.profile__vector:hover {
+    opacity: 0.6;
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+    .profile__vector {
+        max-height: 50px;
+        padding: 17px 132px;
+        max-width: 16px;
+    }
+}

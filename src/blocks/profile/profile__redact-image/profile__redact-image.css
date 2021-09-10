@@ -1,0 +1,6 @@
+.profile__redact-image {
+    position: relative;
+    list-style-type: none;
+    margin: 3.75px 30px 3.75px 0;
+    transition: opacity 0.5s ease-in-out;
+}

@@ -1,0 +1,6 @@
+.form__button_valid {
+    background-color: #000;
+    color: #fff;
+    border: 0;
+    transition: opacity 0.5s ease-in-out;
+}

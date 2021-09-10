@@ -1,0 +1,8 @@
+.element__group {
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.element__group:hover {
+    opacity: 0.5;
+}

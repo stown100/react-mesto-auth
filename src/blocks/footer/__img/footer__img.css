@@ -1,0 +1,13 @@
+.footer__img {
+    color: #545454;
+    font-size: 18px;
+    line-height: 21,78px;
+    font-weight: 400;
+}
+
+@media (max-width: 320px) {
+    .footer__img {
+        font-size: 14px;
+        line-height: 16,94px;
+    }
+}

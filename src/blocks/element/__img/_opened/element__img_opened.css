@@ -1,0 +1,9 @@
+.element__img_opened {
+    z-index: 1;
+    position: absolute;
+    width: 75vw;
+    height: 75vh;
+    /* background-size: cover;
+    background: rgba(0, 0, 0, 0.5); */
+    opacity: 1;
+}

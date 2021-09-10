@@ -1,0 +1,4 @@
+.form__input-border-error-title {
+    border-bottom: 1px solid #FF0000;
+    margin-bottom: 5px;
+}

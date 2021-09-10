@@ -1,0 +1,6 @@
+@media (min-width: 320px) and (max-width: 740px) {
+    .profile__edit {
+        max-width: 18px;
+        max-height: 18px;
+    }
+}

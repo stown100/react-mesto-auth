@@ -1,0 +1,8 @@
+.form__button_invalid {
+    background-color: #FFF;
+    color: rgba(0, 0, 0, 1);
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 2px;
+    cursor: auto;
+}
