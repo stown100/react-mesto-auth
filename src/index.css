@@ -51,3 +51,15 @@
 @import url(./blocks/form/__input/form__input-border-error.css);
 @import url(./blocks/form/__input/form__input-border-error-title.css);
 @import url(./blocks/spinner/spinner.css);
+@import url(./blocks/register/register.css);
+@import url(./blocks/register/register__form/register__form.css);
+@import url(./blocks/register/register__form/register__form_title/register__form_title.css);
+@import url(./blocks/register/register__form/register__form_input/register__form_input.css);
+@import url(./blocks/register/register__form/register__form_button/register__form_button.css);
+@import url(./blocks/register/register__button/register__button.css);
+@import url(./blocks/register/register__button/register__button_link/register__button_link.css);
+@import url(./blocks/register/register__popup-title/register__popup-title.css);
+@import url(./blocks/navbar/navbar.css);
+@import url(./blocks/navbar/navbar__button/nuvbar__button.css);
+@import url(./blocks/navbar/navbar__link/navbar__link.css);
+@import url(./blocks/navbar/navbar_nav/navbar__nav.css);

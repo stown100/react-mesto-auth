@@ -1,0 +1,18 @@
+.register__form_button {
+    margin-top: 216px;
+    padding: 14px 84px;
+    background-color: #FFF;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px
+}
+
+@media (min-width: 320px) and (max-width: 740px) {
+    .register__form_button {
+        font-size: 16px;
+        line-height: 19px;
+    }
+}

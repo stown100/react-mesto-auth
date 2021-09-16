@@ -1,0 +1,5 @@
+@media (min-width: 320px) and (max-width: 900px) {
+    .navbar {
+        padding-right: 30px;
+    }
+}

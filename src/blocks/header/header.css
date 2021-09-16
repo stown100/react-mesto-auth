@@ -3,10 +3,12 @@
     padding-top: 45px;
     max-width: 880px;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (min-width: 320px) and (max-width: 580px) {
     .header {
-        margin: 28px 0 42px;
+        margin: 0px 0 42px;
     }
 }

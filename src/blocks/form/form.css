@@ -1,5 +1,6 @@
 .form {
     padding: 34px 36px 37px;
+    text-align: center;
 }
 
 @media (min-width: 320px) and (max-width: 740px) {

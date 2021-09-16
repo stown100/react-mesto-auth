@@ -3,7 +3,8 @@
     max-width: 880px;
     font-weight: 400;
     font-size: 18px;
-    line-height: 21,78px;
+    line-height: 21, 78px;
+    padding-bottom: 40px;
 }
 
 @media (min-width: 320px) and (max-width: 945px) {
@@ -12,5 +13,6 @@
         max-width: 282px;
         font-size: 14px;
         line-height: 17px;
+        padding-bottom: 20px;
     }
 }
