@@ -17,6 +17,7 @@ import * as Auth from '../utils/Auth';
 import NavBar from './NavBar';
 import EditRegisterPopup from './EditRegisterPopup';
 import EditEnterPopup from './EditEnterPopup';
+import NavBarMenu from './NavBarMenu';
  
 function App() {
   const [avatarPopupOpen, setAvatarPopupOpen] = React.useState(false); //Открытие попапа аватара
@@ -24,6 +25,8 @@ function App() {
   const [newCardPopupOpen, setNewCardPopupOpen] = React.useState(false); //Открытие попапа добавления новой карточки
   const [registerPopupOpen, setRegisterPopupOpen] = React.useState(false); //попап Подтвержения регистрации
   const [enterPopupOpen, setEnterPopupOpen] = React.useState(false);
+  const [burgerMenu, setBurgerMenu] = React.useState(false); //Меню бургер
+
   // const [confirmPopupOpen, setConfirmPopupOpen] = React.useState(false); //Подтвержение удаления карточки    !!!
   const [imagePopupOpen, setImagePopupOpen] = React.useState(false); //Открытие картинки в большом размере
   const [cardData, setCardData] = React.useState({});
@@ -39,6 +42,7 @@ function App() {
     setNewCardPopupOpen(false);
     setRegisterPopupOpen(false);
     setEnterPopupOpen(false);
+    setImagePopupOpen(false);
   }
 
   //Приём данных с сервера
@@ -137,7 +141,6 @@ function App() {
         if (res.data) {
           setLoggedIn(true);
           setUserData({
-            // _id: res.data._id,
             email: res.data.email
           });
         }
@@ -164,11 +167,12 @@ function App() {
 
   const onRegister = ({ password, email }) => {
     return Auth.register(password, email).then((res) => {
-      if (!res || res.statusCode === 400) throw new Error('Что-то пошло не так');
+      if (!res || res.statusCode === 400) throw new Error('Что-то пошло не так')
+      else {
+        setRegisterPopupOpen(true);
+      }
       return res;
     })
-    .catch(() => console.log('400 - некорректно заполнено одно из полей '))
-    .finally(() => setRegisterPopupOpen(true))
   };
 
   const onLogin = ({ password, email }) => {
@@ -196,10 +200,7 @@ function App() {
             <ProtectedRoute exact loggedIn={loggedIn} path="/">
               <Header loggedIn={loggedIn} setUserData={setUserData} onSignOut={onSignOut}>
                 <NavBar email={(res) => setUserData({email: res.email})} onSignOut={onSignOut}>
-                    <ul className="navbar__nav">
-                        <li className="navbar__link">{userData.email}</li>
-                        <li><button onClick={onSignOut} className="navbar__link navbar__button">Выйти</button></li>
-                    </ul>
+                  <NavBarMenu burgerMenu={burgerMenu} setBurgerMenu={setBurgerMenu} userData={userData} onSignOut={onSignOut} isOpen={burgerMenu} />
                 </NavBar>
               </Header>
               <Main setAvatarPopupOpen={setAvatarPopupOpen} 
@@ -227,7 +228,7 @@ function App() {
             <EditRegisterPopup closeAllPopups={closeAllPopups} registerPopupOpen={registerPopupOpen} />
             <EditEnterPopup closeAllPopups={closeAllPopups} enterPopupOpen={enterPopupOpen} />
             {/* <EditDeletePopup confirmPopupOpen={confirmPopupOpen} setConfirmPopupOpen={setConfirmPopupOpen} onCardDelete={handleCardDelete} cardsInfo={cardsInfo} /> */}
-            <ImagePopup {...cardData} setImagePopupOpen={setImagePopupOpen} isOpen={imagePopupOpen} />
+            <ImagePopup {...cardData} closeAllPopups={closeAllPopups} isOpen={imagePopupOpen} />
           </div>
         </div>
       </CurrentUserContext.Provider>

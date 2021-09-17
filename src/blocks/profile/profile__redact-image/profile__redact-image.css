@@ -3,4 +3,11 @@
     list-style-type: none;
     margin: 3.75px 30px 3.75px 0;
     transition: opacity 0.5s ease-in-out;
+    text-align: center;
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+    .profile__redact-image {
+        margin: 0;
+    }
 }
