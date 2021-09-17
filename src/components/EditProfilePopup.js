@@ -3,7 +3,7 @@ import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
                                                         //Проблема с первым инпутом, остаётся только name и ничего не вводиться
                                                         //Второй инпут не меняется
-const EditProfilePopup = ({profilePopupOpen, setProfilePopupOpen, onUpdateUser}) => {
+const EditProfilePopup = ({profilePopupOpen, setProfilePopupOpen, onUpdateUser, closeAllPopups }) => {
     const { currentUser } = React.useContext(CurrentUserContext);
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
@@ -12,7 +12,7 @@ const EditProfilePopup = ({profilePopupOpen, setProfilePopupOpen, onUpdateUser})
     React.useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-    }, [currentUser]);
+    }, [currentUser, profilePopupOpen]);
 
     function handleChangeName(e) {
         setName(e.target.value);
@@ -33,7 +33,7 @@ const EditProfilePopup = ({profilePopupOpen, setProfilePopupOpen, onUpdateUser})
       }
 
     return (
-        <PopupWithForm isOpen={profilePopupOpen} onClose={() => setProfilePopupOpen(false)} onSubmit={handleSubmit} name='profile' title='Редактировать профиль' button='Сохранить'>
+        <PopupWithForm isOpen={profilePopupOpen} onClose={closeAllPopups} onSubmit={handleSubmit} name='profile' title='Редактировать профиль' button='Сохранить'>
         <input type="text" id="name" className="form__input form__input_type_name" name="name"
         placeholder="Имя" minLength="2" maxLength="30" value={name} onChange={handleChangeName} />
         <span id="name-error" className="form__input-error"></span>

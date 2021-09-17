@@ -40,13 +40,13 @@ function Main({ setAvatarPopupOpen,
             </section>
             <section className="elements">
                 {cardsInfo
-                    ? cardsInfo.map(({ link, name, likes, _id, owner }) =>
-                        <Card link={link} name={name} likes={likes} key={_id}
+                    ? (cardsInfo.map(({ link, name, likes, _id, owner }) =>
+                        (<Card link={link} name={name} likes={likes} key={_id}
                             onCardClick={onCardClick} onCardDelete={onCardDelete}
                             owner={owner} onCardLike={onCardLike} cardId={_id}
                             onDeletePopup={onDeletePopup}
-                            />)
-                    : <h3><Spinner /></h3>}
+                            />)))
+                    : (<h3><Spinner /></h3>)}
             </section>
         </main>
     )

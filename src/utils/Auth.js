@@ -8,13 +8,10 @@ export const register = (password, email) => {
     },
     body: JSON.stringify({ password, email })
   })
-    .then((response) => {
-      return response.json();
-    })
+    .then(handleResponse)
     .then((res) => {
       return res;
     })
-    .catch((err) => console.log(err));
 };
 
 export const login = (password, email) => {
@@ -25,7 +22,7 @@ export const login = (password, email) => {
     },
     body: JSON.stringify({ password, email })
   })
-    .then((response => response.json()))
+    .then(handleResponse)
     .then((data) => {
       if (data) {
         localStorage.setItem('jwt', data.jwt);
@@ -34,7 +31,6 @@ export const login = (password, email) => {
         return;
       }
     })
-    .catch(() => console.log('400 - не передано одно из полей' || '401 - пользователь с email не найден '))
 };
 
 export const getContent = (token) => {
@@ -45,6 +41,14 @@ export const getContent = (token) => {
       "Authorization": `Bearer ${token}`
     },
   })
-    .then(res => res.json())
+    .then(handleResponse)
     .then(data => data)
+}
+
+const handleResponse = (res) => {
+  if (res.ok) {
+      return res.json();
+  }
+  // если ошибка, отклоняем промис
+  return Promise.reject(`Ошибка: ${res.status}`);
 }

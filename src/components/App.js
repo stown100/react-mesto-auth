@@ -9,7 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 // import EditDeletePopup from './EditDeletePopup'; !!!
-import { Route, Switch, useHistory, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from "./ProtectedRoute";
@@ -32,6 +32,14 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const history = useHistory();
+
+  const closeAllPopups = () => {
+    setAvatarPopupOpen(false);
+    setProfilePopupOpen(false);
+    setNewCardPopupOpen(false);
+    setRegisterPopupOpen(false);
+    setEnterPopupOpen(false);
+  }
 
   //Приём данных с сервера
   React.useEffect(() => {
@@ -56,9 +64,7 @@ function App() {
         .then((newCard) => {
             setCardsInfo((state) => state.map((c) => c._id === cardId ? newCard : c));
         })
-        .catch(() => {
-            console.log('Что-то сломалось!')
-        })
+        .catch(() => console.log('Что-то сломалось!'))
 }
 
 //Удаление карточки
@@ -67,9 +73,7 @@ function App() {
           .then(() => {
               setCardsInfo((state) => state.filter((card) => card._id !== cardId))
           })
-          .catch(() => {
-              console.log('Что-то сломалось!')
-          })
+          .catch(() => console.log('Что-то сломалось!'))
   }
 
     //Добавление карточки
@@ -79,9 +83,7 @@ function App() {
         setCardsInfo([newCard, ...cardsInfo]); 
         setNewCardPopupOpen(false)
       })
-      .catch(() => {
-        console.log('Что-то сломалось!')
-      })
+      .catch(() => console.log('Что-то сломалось!'))
     }
 //Открытие попапа картинки
   const onCardClick = (link, name) => {
@@ -104,9 +106,7 @@ function App() {
       setProfilePopupOpen(false);
       setCurrentUser(data);
     })
-    .catch(() => {
-      console.log('Что-то сломалось!')
-    })
+    .catch(() => console.log('Что-то сломалось!'))
   }
 
   const handelUpdateAvatar = (avatar) => {
@@ -115,23 +115,34 @@ function App() {
       setAvatarPopupOpen(false)
       setCurrentUser(data);
     })
-    .catch(() => {
-        console.log('Что-то сломалось!')
-      })
+    .catch(() => console.log('Что-то сломалось!'))
   }
+
+  React.useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+
+    document.addEventListener('keydown', closeByEscape)
+    
+    return () => document.removeEventListener('keydown', closeByEscape)
+}, [])
 
   const auth = async (jwt) => {
     return Auth.getContent(jwt)
       .then((res) => {
         // Проверка токена, если токен ваидный записываем данные в state, иначе удаляем токен из localStorage; 
-        if (res) {
+        if (res.data) {
           setLoggedIn(true);
           setUserData({
-            password: res.password,
-            email: res.email
+            // _id: res.data._id,
+            email: res.data.email
           });
         }
       })
+      .catch(() => console.log('400 — Токен не передан или передан не в том формате' || '401 — Переданный токен некорректен'))
   };
 
   React.useEffect(() => {
@@ -146,22 +157,28 @@ function App() {
     if (loggedIn) history.push('/');
   }, [loggedIn]);
 
+  React.useEffect(() => {
+
+  }, [userData])
+
 
   const onRegister = ({ password, email }) => {
     return Auth.register(password, email).then((res) => {
       if (!res || res.statusCode === 400) throw new Error('Что-то пошло не так');
       return res;
-    });
+    })
+    .catch(() => console.log('400 - некорректно заполнено одно из полей '))
+    .finally(() => setRegisterPopupOpen(true))
   };
 
   const onLogin = ({ password, email }) => {
     return Auth.login(password, email).then((res) => {
-      if (!res) throw new Error('Неправильные имя пользователя или пароль');
-      if (res.jwt) {
+      if (!res.token) throw new Error('Неправильные имя пользователя или пароль');
+      else {
+        localStorage.setItem('jwt', res.token);
         setLoggedIn(true);
-        localStorage.setItem('jwt', res.jwt);
       }
-    });
+    })
   };
 
   const onSignOut = () => {
@@ -170,52 +187,50 @@ function App() {
     history.push('/sign-in');
   };
   
-                            //Как передать email в header, Сделать меню бургер
+                            //Сделать меню бургер
   return (
-    <Switch>
       <CurrentUserContext.Provider value={{currentUser}}>
         <div className="App">
           <div className="page">
-          <ProtectedRoute exact loggedIn={loggedIn} path="/">
-            <Header loggedIn={loggedIn} setUserData={setUserData} onSignOut={onSignOut}>
-              <NavBar email={(res) => setUserData({email: res.email})} onSignOut={onSignOut}>
-                  <ul className="navbar__nav">
-                      {/* <li className="navbar__link">{email}</li> */}
-                      <li><button onClick={onSignOut} className="navbar__link navbar__button">Выйти</button></li>
-                  </ul>
-              </NavBar>
-            </Header>
-            <Main setAvatarPopupOpen={setAvatarPopupOpen} 
-            setProfilePopupOpen={setProfilePopupOpen}
-            setNewCardPopupOpen={setNewCardPopupOpen}
-            onCardClick={onCardClick}
-            cardsInfo={cardsInfo}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-            // onDeletePopup={onDeletePopup} !!!
-            />
-            <Footer />
-          </ProtectedRoute>
-            <Route path="/sign-up">
-              <Register onRegister={onRegister} setRegisterPopupOpen={setRegisterPopupOpen} setEnterPopupOpen={setEnterPopupOpen}/>
-            </Route>
-            <Route path="/sign-in">
-              <Login onLogin={onLogin} setEnterPopupOpen={setEnterPopupOpen}/>
-            </Route>
-          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
-          
-          <EditAvatarPopup avatarPopupOpen={avatarPopupOpen} setAvatarPopupOpen={setAvatarPopupOpen} onUpdateAvatar={handelUpdateAvatar} />
-            <EditProfilePopup profilePopupOpen={profilePopupOpen} setProfilePopupOpen={setProfilePopupOpen} onUpdateUser={handleUpdateUser} />
-            <AddPlacePopup newCardPopupOpen={newCardPopupOpen} setNewCardPopupOpen={setNewCardPopupOpen} handleAddPlaceSubmit={handleAddPlaceSubmit} cardsInfo={cardsInfo} />
-            <EditRegisterPopup registerPopupOpen={registerPopupOpen} setRegisterPopupOpen={setRegisterPopupOpen}/>
-            <EditEnterPopup enterPopupOpen={enterPopupOpen} setEnterPopupOpen={setEnterPopupOpen} />
+          <Switch>
+            <ProtectedRoute exact loggedIn={loggedIn} path="/">
+              <Header loggedIn={loggedIn} setUserData={setUserData} onSignOut={onSignOut}>
+                <NavBar email={(res) => setUserData({email: res.email})} onSignOut={onSignOut}>
+                    <ul className="navbar__nav">
+                        <li className="navbar__link">{userData.email}</li>
+                        <li><button onClick={onSignOut} className="navbar__link navbar__button">Выйти</button></li>
+                    </ul>
+                </NavBar>
+              </Header>
+              <Main setAvatarPopupOpen={setAvatarPopupOpen} 
+              setProfilePopupOpen={setProfilePopupOpen}
+              setNewCardPopupOpen={setNewCardPopupOpen}
+              onCardClick={onCardClick}
+              cardsInfo={cardsInfo}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              // onDeletePopup={onDeletePopup} !!!
+              />
+              <Footer />
+            </ProtectedRoute>
+              <Route path="/sign-up">
+                <Register onRegister={onRegister} setRegisterPopupOpen={setRegisterPopupOpen} setEnterPopupOpen={setEnterPopupOpen}/>
+              </Route>
+              <Route path="/sign-in">
+                <Login onLogin={onLogin} setEnterPopupOpen={setEnterPopupOpen}/>
+              </Route>
+          </Switch>
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
+            <EditAvatarPopup closeAllPopups={closeAllPopups} avatarPopupOpen={avatarPopupOpen} onUpdateAvatar={handelUpdateAvatar} />
+            <EditProfilePopup closeAllPopups={closeAllPopups} profilePopupOpen={profilePopupOpen} onUpdateUser={handleUpdateUser} />
+            <AddPlacePopup closeAllPopups={closeAllPopups} newCardPopupOpen={newCardPopupOpen} handleAddPlaceSubmit={handleAddPlaceSubmit} cardsInfo={cardsInfo} />
+            <EditRegisterPopup closeAllPopups={closeAllPopups} registerPopupOpen={registerPopupOpen} />
+            <EditEnterPopup closeAllPopups={closeAllPopups} enterPopupOpen={enterPopupOpen} />
             {/* <EditDeletePopup confirmPopupOpen={confirmPopupOpen} setConfirmPopupOpen={setConfirmPopupOpen} onCardDelete={handleCardDelete} cardsInfo={cardsInfo} /> */}
-            {//открытие картинки в большом размере
-            imagePopupOpen && <ImagePopup {...cardData} setImagePopupOpen={setImagePopupOpen} />}
+            <ImagePopup {...cardData} setImagePopupOpen={setImagePopupOpen} isOpen={imagePopupOpen} />
           </div>
         </div>
       </CurrentUserContext.Provider>
-        </Switch>
   );
 }
 

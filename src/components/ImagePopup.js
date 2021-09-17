@@ -1,9 +1,9 @@
 import closePopupImg from '../images/CloseIcon.svg';
 
 
-function ImagePopup({ link, name, setImagePopupOpen }) {
+function ImagePopup({ link, name, setImagePopupOpen, isOpen }) {
     return (
-        <div className={'popup popup_img popup_opened'}>
+        <div className={`popup popup_img  ${isOpen && "popup_opened"}`}>
             <div className="popup__container popup__container_img">
                 <button type="button" className="popup__close popup__close_img" onClick={() => setImagePopupOpen(false)}>
                     <img src={closePopupImg} alt="Крестик" />

@@ -18,7 +18,7 @@ const Login = ({ onLogin, setEnterPopupOpen }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         onLogin({ email, password })
-          .then(() => resetForm)
+          .then(() => resetForm())
           .then(() => history.push('/'))
           //Ошибку в попап
           .catch(() => setEnterPopupOpen(true));
@@ -39,8 +39,8 @@ const Login = ({ onLogin, setEnterPopupOpen }) => {
                 {/* <button className="register__enter">Войти</button> */}
                 <form className="register__form" onSubmit={handleSubmit}>
                 <h2 className="register__form_title">Вход</h2>
-                <input className="register__form_input" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}></input>
-                <input className="register__form_input" placeholder="Пароль" value={password} onChange={e => setPassword(e.target.value)} ></input>
+                <input type="email" className="register__form_input" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}></input>
+                <input type="password" className="register__form_input" placeholder="Пароль" value={password} onChange={e => setPassword(e.target.value)} ></input>
                 <button className="register__form_button">Войти</button>
                 </form>
             </div>

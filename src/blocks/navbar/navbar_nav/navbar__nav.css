@@ -3,3 +3,9 @@
     list-style-type: none;
     margin: 0;
 }
+
+@media (min-width: 320px) and (max-width: 460px) {
+    .navbar__nav {
+        flex-direction: column;
+    }
+}

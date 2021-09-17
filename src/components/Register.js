@@ -16,7 +16,7 @@ const Register = ({onRegister, setRegisterPopupOpen, setEnterPopupOpen}) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       onRegister({ email, password })
-        .then(() => resetForm)
+        .then(() => resetForm())
         .then(() => history.push('/sign-in'))
         .catch(() => setEnterPopupOpen(true))
     };
@@ -38,9 +38,9 @@ const Register = ({onRegister, setRegisterPopupOpen, setEnterPopupOpen}) => {
                 {/* <button className="register__enter">Войти</button> */}
                 <form className="register__form" onSubmit={handleSubmit}>
                 <h2 className="register__form_title">Регистрация</h2>
-                <input className="register__form_input" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}></input>
-                <input className="register__form_input" placeholder="Пароль" value={password} onChange={e => setPassword(e.target.value)}></input>
-                <button className="register__form_button" onClick={() => setRegisterPopupOpen(true)}>Зарегистрироваться</button>
+                <input type="email" className="register__form_input" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}></input>
+                <input type="password" className="register__form_input" placeholder="Пароль" value={password} onChange={e => setPassword(e.target.value)}></input>
+                <button className="register__form_button">Зарегистрироваться</button>
                 </form>
                 <button className="register__button"><Link to="sign-in" className="register__button_link">Вы уже зарегистрированны? Войти</Link></button>
             </div>

@@ -1,7 +1,7 @@
 import PopupWithForm from "./PopupWithForm";
 import React from "react";
 
-const AddPlacePopup = ({newCardPopupOpen, setNewCardPopupOpen, handleAddPlaceSubmit}) => {
+const AddPlacePopup = ({newCardPopupOpen, closeAllPopups, handleAddPlaceSubmit}) => {
     const [cardsNameValue, setCardsNameValue] = React.useState('');
     const [cardsTitleValue, setCardsTitleValue] = React.useState('');
     function handleSubmit(e) {
@@ -21,7 +21,7 @@ const AddPlacePopup = ({newCardPopupOpen, setNewCardPopupOpen, handleAddPlaceSub
     }
     
     return (
-        <PopupWithForm isOpen={newCardPopupOpen} onClose={() => setNewCardPopupOpen(false)} onSubmit={handleSubmit} name='images' title='Новое место' button='Сохранить'>
+        <PopupWithForm isOpen={newCardPopupOpen} onClose={closeAllPopups} onSubmit={handleSubmit} name='images' title='Новое место' button='Сохранить'>
         <input type="text" id="name-card" className="form__input form__input_type_title" placeholder="Название" onChange={onAddPlaceName}
           name="title" minLength="2" maxLength="30" value={cardsNameValue} required />
         <span id="name-card-error" className="form__input-error"></span>

@@ -3,7 +3,7 @@ import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 
-const EditAvatarPopup = ({avatarPopupOpen, setAvatarPopupOpen, onUpdateAvatar}) => {
+const EditAvatarPopup = ({avatarPopupOpen, onUpdateAvatar, closeAllPopups}) => {
     const { currentUser } = React.useContext(CurrentUserContext);
     const inputRef = React.useRef();
 
@@ -21,7 +21,7 @@ const EditAvatarPopup = ({avatarPopupOpen, setAvatarPopupOpen, onUpdateAvatar}) 
       } 
 
     return (
-        <PopupWithForm isOpen={avatarPopupOpen} onClose={() => setAvatarPopupOpen(false)} onSubmit={handleSubmit}
+        <PopupWithForm isOpen={avatarPopupOpen} onClose={closeAllPopups} onSubmit={handleSubmit}
         name='avatar' title='Обновить аватар' button='Сохранить'>
           <input type="url" id="avatar" className="form__input form__input_type_avatar" name="avatar"
             placeholder="ссылка на аватар" ref={inputRef} required />

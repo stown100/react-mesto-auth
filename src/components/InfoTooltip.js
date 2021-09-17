@@ -7,9 +7,9 @@ const InfoTooltip = ({ name, onClose, onSubmit, children, isOpen }) => {
             <button type="button" className={`popup__close popup__close_${name}`} onClick={onClose}>
                 <img src={closePopupImg} alt="Крестик" />
             </button>
-            <form onSubmit={onSubmit} className="form" action="#">
+            <div onSubmit={onSubmit} className="form">
                 {children}
-            </form>
+            </div>
         </div>
         </div>
     )
