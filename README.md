@@ -39,36 +39,5 @@
 
 Вам никогда не нужно использовать "извлечение`. Кураторский набор функций подходит для небольших и средних развертываний, и вы не должны чувствовать себя обязанным использовать эту функцию. Однако мы понимаем, что этот инструмент не был бы полезен, если бы вы не могли настроить его, когда будете готовы к этому.
 
-## Узнайте больше
-
-Вы можете узнать больше в [документации по созданию приложения React](https://facebook.github.io/create-react-app/docs/getting-started ).
-
-Чтобы изучить React, ознакомьтесь с [документацией React](https://reactjs.org /).
-
-### Разделение кода
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Анализ размера пакета
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Создание прогрессивного веб-приложения
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Расширенная Конфигурация
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Развертывание
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` не удается уменьшить
-
-Этот раздел переместился сюда: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
 Все запросы на авторизацию, регистрацию и проверку токена должны работать через сервис https://auth.nomoreparties.co . Другие запросы, не связанные с этой проектной работой, могут быть направлены в серверную часть из предыдущих спринтов.
 Проект завершён.
