@@ -1,0 +1,10 @@
+@media (min-width: 320px) and (max-width: 900px) {
+    .popup__close_visible {
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0.5s, opacity 0.5s ease-in-out;
+        /* position: absolute;
+        top: 71.5px;
+        right: 10px; */
+    }
+}

@@ -4,45 +4,61 @@ class Api {
         this.headers = headers;
     }
     //Добавление карточек с сервера
-    getInitialCards() {
+    getInitialCards(token) {
         return fetch(`${this.url}/cards`, {
             method: 'GET',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
         })
-        .then(this._handleResponse)
+        .then((res) => this._handleResponse(res))
     }
     //добавление новой карточки
-    addTask(data) {
+    addTask(data, token) {
         return fetch(`${this.url}/cards`, {
             method: 'POST',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify(data)
         })
             .then(this._handleResponse)
     }
     //Удаление карточки
-    deleteTask(cardId) {
+    deleteTask(cardId, token) {
         return fetch(`${this.url}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
         })
         .then(this._handleResponse)
     }
 
     //Редактирование профиля(получаю данные с сервера)
-    getUserInfo() {
+    getUserInfo(token) {
         return fetch(`${this.url}/users/me`, {
-            // method: 'PATCH',
-            headers: this.headers,
+            // method: 'GET',
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
         })
         .then(this._handleResponse)
     }
 
     //редактирование профиля(Отправляю данные да сервер)
-    setUserInfo({name, about}) {
+    setUserInfo({name, about}, token) {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify({
                 name,
                 about
@@ -52,20 +68,26 @@ class Api {
     }
 
     //замена аватара
-    setUserAvatar(avatar) {
+    setUserAvatar(avatar, token) {
         return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify(avatar)
         })
         .then(this._handleResponse)
     }
 
     //лайки
-    likeCard(id, like) {
+    likeCard(id, like, token) {
         return fetch(`${this.url}/cards/likes/${id}`, {
             method: like ? 'DELETE' : 'PUT',
-            headers: this.headers,
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
         })
         .then(this._handleResponse)
     }
@@ -80,12 +102,16 @@ class Api {
     }
 }
 
-const api = new Api({                   //9
-    url: 'https://mesto.nomoreparties.co/v1/cohort-26',
-    headers: {
-      authorization: '4187936b-f13d-40c6-aac3-45e4140019db',
-      'Content-Type': 'application/json'
-    }
+const api = new Api({
+    // url: 'https://application-mesto.nomoredomains.icu',
+    // url: 'http://localhost:7000', // <--------------------------- Стучусь к адресу бэкенда
+    url: 'http://localhost:7000',
+    // url: 'https://api.application-mesto.nomoredomains.xyz',
+    // url: 'https://mesto.nomoreparties.co/v1/cohort-26',
+    // headers: {
+    //   authorization: '4187936b-f13d-40c6-aac3-45e4140019db',
+    //   'Content-Type': 'application/json'
+    // }
 })
 
 export default api;

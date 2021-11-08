@@ -15,9 +15,12 @@
     opacity: 0.6;
 }
 
-@media (min-width: 320px) and (max-width: 740px) {
-    .popup__close {
+@media (min-width: 320px) and (max-width: 900px) {
+    .popup__close_invisible {
         max-width: 26px;
         right: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0.5s, opacity 0.5s ease-in-out;
     }
 }

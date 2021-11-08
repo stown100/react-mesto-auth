@@ -12,9 +12,3 @@
         padding-right: 0px;
     }
 }
-
-.navbar__nav_open {
-    /* visibility: visible; */
-    color: red;
-    display: none;
-}

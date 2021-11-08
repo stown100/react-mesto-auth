@@ -1,0 +1,7 @@
+@media (min-width: 320px) and (max-width: 580px) {
+    .navbar__button-menu_open {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    }
+}
